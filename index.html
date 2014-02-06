@@ -1,0 +1,103 @@
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>Abhishek Ash</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+        <script src="js/jquery-1.10.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/d3.v3.min.js"></script>
+        <script src="skills.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
+           'version':'1','packages':['timeline']}]}"></script>
+    </head>
+    
+    <body>
+        <div class="header header-cont">
+            <div class="container">
+                <div class="headerLinkDiv">
+                    <div class="headerText">Abhishek Ash</div>
+                    <a class="navLink" href="#">ash.abhishek@gmail.com</a>
+                </div>
+                <div class="headerNavLinkDiv">
+<!--                    <a class="navLink" onclick="scrollToDiv('home')">Home</a>-->
+                    <a class="navLink" onclick="scrollToDiv('summary')">SUMMARY</a>
+                    <a class="navLink" onclick="scrollToDiv('skills')">SKILLSET</a>
+                    <a class="navLink" onclick="scrollToDiv('experience')">EXPERIENCE</a>
+                    <a class="navLink" onclick="scrollToDiv('edu')">EDUCATION</a>
+                    <a class="navLink" onclick="scrollToDiv('hobbies')">INTERESTS</a>
+                </div>
+            </div>
+        </div>
+        <section id="home" data-speed="10" data-type="background">
+            <div class="container" style="padding-top: 100px;">
+            </div>
+        </section>
+        <section id="summary" data-speed="10" data-type="background">
+            <div class="container" style="padding: 5%;">
+                <h2 style="color: white;">Summary</h2>
+                <div class="list-group">
+                            <div class="list-group-item summaryItem box">
+                                4+ years of total experience in designing and developing Java
+                            </div>
+                            <div class="list-group-item summaryItem box">
+                                3+ years in R&D of TCS ECA product at Tata Research development and Design Center.
+                            </div>
+                            <div class="list-group-item summaryItem box">
+                                Successful IT professional with proven ability to understand business problems and apply technology to formulate workable solution.</div>
+                            <div class="list-group-item summaryItem box">
+                                <div>Hands on knowledge on Spring,Restful Webservices,Maven,JSON,JMS,Spring Batch&nbsp;
+                                </div>
+                            </div>
+                            <div class="list-group-item summaryItem box">
+                                Team player with good communication and interpersonal skills.
+                            </div>
+                            <div class="list-group-item summaryItem box">
+                                IIT Bombay certified Static Program Analysis expert.
+                            </div>
+                            <div class="list-group-item summaryItem box">
+                                Expertise in full project life cycle development for implementation and integration.
+                            </div>
+                </div>
+            </div>
+        </section>
+        <section id="skills" data-speed="10" data-type="background">
+            <div class="container">
+                <h2>skillset</h2>
+            </div>
+            <div id="viz"></div>
+        </section>
+        <section id="experience" data-speed="10" data-type="background">
+            <div class="container">
+                <h2 style="color: white;">profesional experience</h2>
+                <div class="col-md-10 col-md-offset-1">
+                    <iframe src='http://cdn.knightlab.com/libs/timeline/latest/embed/index.html?source=0AoXp-PwzVBfrdGpWVk1abTE1Qlp5Tnc3OTBkQjVZUEE&font=Bevan-PotanoSans&maptype=TERRAIN&lang=en&start_at_slide=1&height=650' width='100%' height='650' frameborder='0'></iframe>
+                </div>
+            </div>
+        </section>
+        <section id="edu" data-speed="14" data-type="background">
+            <div class="container">
+                <div class="col-md-8">
+                <h1 style="color: white;">education</h1>
+                <div id="education" style="width: 900px; height: 400px;"></div>
+            </div>
+        </section>
+        <section id="hobbies" data-speed="14" data-type="background">
+            <div class="container">
+                <h1 style="color: white;">interests</h1>
+                <br><br>
+                <div class="col-md-14" style="height:500px; display: inline-flex;">
+                    <div id="travelling" class="interest travelling"></div>
+                    <div id="reading" class="interest reading"></div>
+                    <div id="trekking" class="interest trekking"></div>
+                </div>
+            </div>
+            </div>
+        </section>
+    
+    </body>
+    <script src="js/utils.js"></script>
+    </html>
