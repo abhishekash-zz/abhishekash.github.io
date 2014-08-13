@@ -1,30 +1,4 @@
-   $(document).ready(function () {
-       // Cache the Window object
-       $window = $(window);
-       $('section[data-type="background"]').each(function () {
-           var $bgobj = $(this); // assigning the object
-           $(window).scroll(function () {
-               // Scroll the background at var speed
-               // the yPos is a negative value because we're scrolling it UP!
-               var yPos = -($window.scrollTop() / $bgobj.data('speed'));
-               // Put together our final background position
-               var coords = '50% ' + (yPos) + 'px';
-               // Move the background
-               $bgobj.css({
-                   backgroundPosition: coords
-               });
-               
-            var window_top = $(window).scrollTop() + 70; 
-            var div_top = $('#nav-anchor').offset().top;
-            if (window_top > div_top) {
-                $('nav').addClass('stick');
-            } else {
-                $('nav').removeClass('stick');
-            }
-               
-           }); // window scroll Ends
-       });
-   });
+   $(document).ready(function () {});
    /* 
     * Create HTML5 elements for IE's sake
     */
@@ -32,16 +6,48 @@
    document.createElement("section");
 
    /*-------*/
-   function scrollToDiv(divId) {
-       var target = "#" + divId;
+
+   var divList = ['home', 'summary', 'skills', 'experience', 'edu', 'hobbies'];
+   var elem = 0;
+
+   function traverseToDiv() {
+       $("#rotate").css({
+           display: 'none'
+       });
+       if (elem === 0) {
+           $('.previous').css({
+               display: 'none'
+           });
+           $('.next').css({
+               display: 'block'
+           });
+       } else if (divList.length - 1 > elem > 0) {
+           $('.previous').css({
+               display: 'block'
+           });
+           $('.next').css({
+               display: 'block'
+           });
+       } else if (elem == divList.length - 1) {
+           $('.next').css({
+               display: 'none'
+           });
+           $('.previous').css({
+               display: 'block'
+           });
+       }
        $('html, body').animate({
-           scrollTop: $(target).offset().top - 70
+           scrollTop: $("section[id=" + divList[elem] + "]").offset().top - 70
        }, 1000);
-   };
+   }
 
-   /* ---------------- */
 
-   google.setOnLoadCallback(drawChart);
+   traverseToDiv();
+
+   function scrollToDiv(divId) {
+       elem = divList.indexOf(divId);
+       traverseToDiv();
+   }
 
    function drawChart() {
        var container = document.getElementById('education');
@@ -65,10 +71,10 @@
            id: 'End'
        });
        dataTable.addRows([
-                ['Bachelor of Technology - Electrical', '7.9 CGPA, ITER , Bhubaneswar', new Date(2005, 8, 8), new Date(2009, 8, 8)],
-                ['HSC', '82.8%, Jamshedpur Public School, Jamshedpur', new Date(2003, 6, 6), new Date(2005, 6, 6)],
-                ['SSC', '85.8%, B.S.S.Pranav Children World, Jamshedpur',new Date(2000, 6, 6), new Date(2003, 6, 6)]
-    ]);
+                ['B.Tech', '7.9 CGPA, ITER, Bhubaneswar', new Date(2005, 8, 8), new Date(2009, 8, 8)],
+                ['12 th', '82.8 %, Jamshedpur Public School , Jamshedpur', new Date(2003, 6, 6), new Date(2005, 6, 6)],
+                ['10 th', '85.8 %, B.S.S Public School,Jamshedpur', new Date(2001, 6, 6), new Date(2003, 6, 6)]
+            ]);
 
        var options = {
            timeline: {
@@ -77,24 +83,35 @@
        };
 
        chart.draw(dataTable, options);
-   }
+   };
+
    /* ---------------- */
 
-   var width = 1300,
-       height = 900;
-   var color = d3.scale.category20();
-
-   var force = d3.layout.force()
-       .charge(-2000)
-       .friction(0.8)
-       .linkDistance(100)
-       .size([width, height]);
-
-   var svg = d3.select("#viz").append("svg")
-       .attr("width", width)
-       .attr("height", height);
-
    var drawGraph = function (graph) {
+   
+       var width = $(window).width(),
+       height = $(window).height();
+	   var radius = 30;
+	   var linkDistance = 30;
+	   var friction = 0.3;
+	   if (width > 767) {
+	       radius = 70;
+	       linkDistance = 100;
+	       friction = 0.8;
+	   }
+	   
+	   var color = d3.scale.category20();
+
+	   var force = d3.layout.force()
+    	   .charge(-2000)
+	       .friction(friction)
+	       .linkDistance(linkDistance)
+	       .size([width, height]);
+
+	   var svg = d3.select("#viz").append("svg")
+	       .attr("width", width)
+	       .attr("height", height);   
+   
        force
            .nodes(graph.nodes)
            .links(graph.links)
@@ -116,18 +133,17 @@
 
        var node = gnodes.append("circle")
            .attr("class", "node")
-           .attr("r", 70)
+           .attr("r", radius)
            .style("fill", function (d) {
                return color(d.group);
            })
            .call(force.drag);
 
        var labels = gnodes.append("text")
+       		.style('color','white')
            .text(function (d) {
                return d.name;
            });
-
-       console.log(labels);
 
        force.on("tick", function () {
            link.attr("x1", function (d) {
@@ -146,8 +162,6 @@
            gnodes.attr("transform", function (d) {
                return 'translate(' + [d.x, d.y] + ')';
            });
-
-
 
        });
    };
@@ -214,7 +228,7 @@
                "group": 2
         },
            {
-               "name": "Test Driven Development",
+               "name": "TDD",
                "group": 4
         },
            {
@@ -230,12 +244,8 @@
                "group": 4
         },
            {
-               "name": "SQL",
-               "group": 5
-        },
-           {
-               "name": "NoSql",
-               "group": 5
+               "name": "sql/noSql",
+               "group": 4
         }
 
 
@@ -244,17 +254,17 @@
            {
                "source": 0,
                "target": 0,
-               "value": 0
+               "value": 1
         },
            {
                "source": 1,
                "target": 0,
-               "value": 0
+               "value": 1
         },
            {
                "source": 2,
                "target": 0,
-               "value": 0
+               "value": 1
         },
            {
                "source": 3,
@@ -313,44 +323,44 @@
         },
            {
                "source": 14,
-               "target": 2,
-               "value": 1
+               "target": 1,
+               "value": 0
         },
            {
                "source": 15,
-               "target": 2,
+               "target": 4,
                "value": 0
         },
            {
                "source": 16,
-               "target": 3,
+               "target": 4,
                "value": 0
         },
            {
                "source": 17,
-               "target": 3,
+               "target": 4,
                "value": 0
         },
            {
                "source": 18,
-               "target": 3,
+               "target": 4,
                "value": 0
         },
            {
                "source": 19,
                "target": 4,
                "value": 0
-        },
-           {
-               "source": 20,
-               "target": 4,
-               "value": 0
-        }
-
+           }
   ]
    };
-   drawGraph(graph);
-
-
-
-   /* ------------ */
+    google.setOnLoadCallback(drawChart);
+	var init = function(){
+   		$('#viz').html("");
+    	$('#education').html("");
+	   	drawGraph(graph);
+	};
+   init();
+   $(window).resize(function(){   
+		init();
+		drawChart();
+   });
